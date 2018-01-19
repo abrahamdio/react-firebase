@@ -7,7 +7,6 @@ import {
   View
 } from 'react-native';
 import allReducers from './src/reducers/index.js';
-import App from './src/App.js';
 import HomeScreen from './src/components/HomeScreen/index.js'
 import thunk from 'redux-thunk'
 import {createStore, applyMiddleware} from 'redux';
