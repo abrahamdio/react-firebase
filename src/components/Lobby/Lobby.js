@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { AppRegistry, Alert } from "react-native";
-import { Container, Header, Left, Body, Item, Input, Title, Card, CardItem, Content, Right, Icon, Button, Text, Spinner, List } from "native-base";
-import { StackNavigator } from "react-navigation";
+import { Alert, View, ScrollView } from "react-native";
+import { ListItem, Container, Header, Left, Body, Title, Content, Right, Icon, Button, Text, Spinner, List } from "native-base";
 import fire from '../../fire';
 
 import { connect } from 'react-redux';
@@ -41,27 +40,39 @@ class WaitingRoom extends Component {
     // }
     getContent() {
         if (this.props.data.roomStatus !== 'READY') {
-            return <Spinner color="blue" />;
+            return <Spinner color="grey" />;
         }
+
         return (
-            <Content>
-                <Text selectable style={{fontSize: 25, marginBottom: 25}}>{this.props.data.roomId}</Text>
-                <List
-                    dataArray={this.props.data.roomPlayers.players}
-                    renderRow={(item) =>
-                        <Text style={{fontSize: 15}}>{item.name}</Text>}
-                />    
-            </Content>
+            <View style={{ padding: 15, flex: 1, backgroundColor: 'white' }}>
+                <View sytle={{ flex: 1 }}>
+                    <Text style={{ fontSize: 20, marginBottom: 10, padding: 5, textAlign: 'center' }}>Room ID</Text>
+                    <Text selectable style={{ fontSize: 35, padding: 10, marginBottom: 10, borderWidth: 1, textAlign: 'center' }}>{this.props.data.roomId}</Text>
+                    <Text style={{ fontSize: 15, padding: 10, marginBottom: 5 }}>Players: </Text>
+                </View>
+                <View sytle={{ flex: 1 }}>
+                    <ScrollView>
+                        <List
+                            style={{ backgroundColor: 'white' }}
+                            dataArray={this.props.data.roomPlayers.players}
+                            renderRow={(item) =>
+                                <ListItem style={{ backgroundColor: 'white', height: 40, padding: 8 }}>
+                                    <Icon name="ios-man-outline" />
+                                    <Text style={{ paddingLeft: 12, fontSize: 12 }}>{item.name}</Text>
+                                </ListItem>
+                            }
+                        />
+                    </ScrollView>
+                </View>
+            </View>
             
         );
     }
     render() {
         return (
-            <Container>
-                <Content padder>
-                    {this.getContent()}
-                </Content>
-            </Container>
+            <View style={{flex: 1}}>
+                {this.getContent()}
+            </View>
         );
     }
 }
